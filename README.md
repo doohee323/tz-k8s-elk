@@ -23,9 +23,19 @@ It installs ELK on k8s in local VMs. It use Helm3, but using the official guides
   vagrant up
   vagrant destroy -f
 
+  vagrant ssh k8s-master
+
+  bash /vagrant/tz-local/resource/elk/install.sh
+
+  vagrant restore
+
   vagrant snapshot save k8s-master k8s-master_1
   vagrant snapshot save node-1 node-1_1
   vagrant snapshot save node-1 node-1_1
+
+  vagrant snapshot restore k8s-master k8s-master_1
+  vagrant snapshot restore node-1 node-1_1
+  vagrant snapshot restore node-1 node-1_1
 ``` 
 
 ## -. Verify

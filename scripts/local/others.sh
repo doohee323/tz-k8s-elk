@@ -37,7 +37,7 @@ exit 0
 ##################################################################
 # call es install script
 ##################################################################
-bash /vagrant/tz-local/resource/elk/install.sh
+#bash /vagrant/tz-local/resource/elk/install.sh
 
 ##################################################################
 # call dashboard install script

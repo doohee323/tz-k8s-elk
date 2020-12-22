@@ -5,7 +5,7 @@ metadata:
     deprecated.daemonset.template.generation: "1"
     meta.helm.sh/release-name: filebeat
     meta.helm.sh/release-namespace: default
-  creationTimestamp: "2020-12-22T06:37:08Z"
+  creationTimestamp: "2020-12-22T07:02:18Z"
   generation: 1
   labels:
     app: filebeat-filebeat
@@ -187,7 +187,7 @@ metadata:
           f:type: {}
     manager: Go-http-client
     operation: Update
-    time: "2020-12-22T06:37:08Z"
+    time: "2020-12-22T07:02:18Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -199,11 +199,11 @@ metadata:
         f:updatedNumberScheduled: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2020-12-22T06:37:08Z"
+    time: "2020-12-22T07:02:18Z"
   name: filebeat-filebeat
   namespace: default
-  resourceVersion: "2670"
-  uid: 1f9a04fd-768e-4e97-83aa-def7d8710708
+  resourceVersion: "1500"
+  uid: e379d5da-8894-44ef-b5cd-8607dc30cd2e
 spec:
   revisionHistoryLimit: 10
   selector:

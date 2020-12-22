@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = IMAGE_NAME
   config.ssh.insert_key=false
   config.vm.provider "virtualbox" do |v|
-    v.memory = 6144
+    v.memory = 5120
     v.cpus = 4
   end
 
