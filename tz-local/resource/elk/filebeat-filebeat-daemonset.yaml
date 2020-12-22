@@ -5,7 +5,7 @@ metadata:
     deprecated.daemonset.template.generation: "1"
     meta.helm.sh/release-name: filebeat
     meta.helm.sh/release-namespace: default
-  creationTimestamp: "2020-12-22T07:02:18Z"
+  creationTimestamp: "2020-12-22T19:52:31Z"
   generation: 1
   labels:
     app: filebeat-filebeat
@@ -187,7 +187,7 @@ metadata:
           f:type: {}
     manager: Go-http-client
     operation: Update
-    time: "2020-12-22T07:02:18Z"
+    time: "2020-12-22T19:52:31Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -199,11 +199,11 @@ metadata:
         f:updatedNumberScheduled: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2020-12-22T07:02:18Z"
+    time: "2020-12-22T19:52:31Z"
   name: filebeat-filebeat
   namespace: default
-  resourceVersion: "1500"
-  uid: e379d5da-8894-44ef-b5cd-8607dc30cd2e
+  resourceVersion: "20958"
+  uid: a90000ba-9cfc-47c7-b88c-1ade66627ae1
 spec:
   revisionHistoryLimit: 10
   selector:
@@ -240,19 +240,19 @@ spec:
               fieldPath: spec.nodeName
         image: docker.elastic.co/beats/filebeat:7.10.1
         imagePullPolicy: IfNotPresent
-        livenessProbe:
-          exec:
-            command:
-            - sh
-            - -c
-            - |
-              #!/usr/bin/env bash -e
-              curl --fail 127.0.0.1:5066
-          failureThreshold: 3
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 5
+        # livenessProbe:
+        #   exec:
+        #     command:
+        #     - sh
+        #     - -c
+        #     - |
+        #       #!/usr/bin/env bash -e
+        #       curl --fail 127.0.0.1:5066
+        #   failureThreshold: 3
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10
+        #   successThreshold: 1
+        #   timeoutSeconds: 5
         name: filebeat
         readinessProbe:
           exec:
@@ -295,6 +295,8 @@ spec:
         - mountPath: /var/run/docker.sock
           name: varrundockersock
           readOnly: true
+        - mountPath: /mnt
+          name: local-persistent-storage
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -323,15 +325,18 @@ spec:
           path: /var/run/docker.sock
           type: ""
         name: varrundockersock
+      - name: local-persistent-storage
+        persistentVolumeClaim:
+          claimName: tz-pvc
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 1
     type: RollingUpdate
 status:
-  currentNumberScheduled: 2
-  desiredNumberScheduled: 2
+  currentNumberScheduled: 3
+  desiredNumberScheduled: 3
   numberMisscheduled: 0
   numberReady: 0
-  numberUnavailable: 2
+  numberUnavailable: 3
   observedGeneration: 1
-  updatedNumberScheduled: 2
+  updatedNumberScheduled: 3

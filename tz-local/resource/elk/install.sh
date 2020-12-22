@@ -11,6 +11,8 @@ mkdir -p /vagrant/es/index0
 mkdir -p /vagrant/es/index1
 mkdir -p /vagrant/es/index2
 
+mkdir -p /vagrant/data
+
 helm uninstall elasticsearch
 
 k delete pvc elasticsearch-master-elasticsearch-master-0
@@ -25,6 +27,9 @@ helm install elasticsearch --version 7.8.0 elastic/elasticsearch
 
 k delete -f /vagrant/tz-local/resource/elk/storage-local.yaml
 k apply -f /vagrant/tz-local/resource/elk/storage-local.yaml
+
+k delete -f /vagrant/tz-local/resource/elk/tz-py-crawler-pv.yaml
+k apply -f /vagrant/tz-local/resource/elk/tz-py-crawler-pv.yaml
 
 ## *** fix size & resource issue
 k get statefulset.apps/elasticsearch-master -o yaml > /vagrant/tz-local/resource/elk/elasticsearch-master-statefulset.yaml
@@ -42,8 +47,14 @@ helm install filebeat elastic/filebeat
 k get daemonset.apps/filebeat-filebeat -o yaml > /vagrant/tz-local/resource/elk/filebeat-filebeat-daemonset.yaml
 k delete -f /vagrant/tz-local/resource/elk/filebeat-filebeat-daemonset.yaml
 sudo sed -i "s|filebeat test output|curl --fail http://elasticsearch-master:9200|g" /vagrant/tz-local/resource/elk/filebeat-filebeat-daemonset.yaml
-k apply -f /vagrant/tz-local/resource/elk/filebeat-filebeat-daemonset.yaml
 #curl http://localhost:31200/_cat/indices
+
+# add a new filebeat config
+k get configmap filebeat-filebeat-config -o yaml > /vagrant/tz-local/resource/elk/filebeat-filebeat-config.yaml
+k delete configmap filebeat-filebeat-config
+k apply -f /vagrant/tz-local/resource/elk/filebeat-filebeat-config.yaml
+k delete -f /vagrant/tz-local/resource/elk/filebeat-filebeat-daemonset.yaml
+k apply -f /vagrant/tz-local/resource/elk/filebeat-filebeat-daemonset.yaml
 
 helm uninstall kibana
 helm install kibana --version 7.8.0 elastic/kibana
@@ -79,3 +90,9 @@ echo '
 cat /vagrant/info
 
 exit 0
+
+http://dhong@dhong323:30601
+
+
+k exec -it pod/filebeat-filebeat-4msfp -- sh
+vi /mnt/config/filebeat.yml
