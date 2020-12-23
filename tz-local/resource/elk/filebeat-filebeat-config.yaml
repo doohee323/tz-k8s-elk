@@ -1,10 +1,16 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  annotations:
+    meta.helm.sh/release-name: filebeat
+    meta.helm.sh/release-namespace: default
   labels:
     app: filebeat-filebeat
+    app.kubernetes.io/managed-by: Helm
+    chart: filebeat-7.10.1
+    heritage: Helm
+    release: filebeat
   name: filebeat-filebeat-config
-  namespace: default
 data:
   filebeat.yml: |
     filebeat.inputs:
@@ -16,14 +22,6 @@ data:
       json.keys_under_root: true
       json.overwrite_keys: true
       json.add_error_key: false
-  #     exclude_lines: ["^/fonts/", "^/img/", "^/js/", "^/styles/", "^/transfers?size=30"]
-  #     fields:
-  #       index_prefix: stats
     output.elasticsearch:
       host: '${NODE_NAME}'
-      index: "api-access-%{+yyyy.MM.dd}"
       hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
-    setup.template:
-      name: 'api-access'
-      pattern: 'api-access-*'
-      enabled: false

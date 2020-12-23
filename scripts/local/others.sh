@@ -50,3 +50,24 @@ exit 0
 #bash /vagrant/tz-local/resource/monitoring/install.sh
 
 exit 0
+
+vagrant snapshot save k8s-master k8s-master_init --force
+vagrant snapshot save node-1 node-1_init --force
+vagrant snapshot save node-2 node-2_init --force
+
+vagrant snapshot restore k8s-master k8s-master_init
+vagrant snapshot restore node-1 node-1_init
+vagrant snapshot restore node-2 node-2_init
+
+vagrant snapshot save k8s-master k8s-master_es --force
+vagrant snapshot save node-1 node-1_es --force
+vagrant snapshot save node-2 node-2_es --force
+
+vagrant snapshot save k8s-master k8s-master_elk --force
+vagrant snapshot save node-1 node-1_elk --force
+vagrant snapshot save node-2 node-2_elk --force
+
+
+
+
+
