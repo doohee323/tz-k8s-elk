@@ -10,7 +10,7 @@ data:
     filebeat.inputs:
     - type: log
       paths:
-        - "/mnt/stats-*.log"
+        - "/mnt/*.json"
       fields_under_root: true
       # json.message_key: "message"
       json.keys_under_root: true
