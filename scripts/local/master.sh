@@ -38,6 +38,8 @@ sudo cp /root/.kube/config /home/vagrant/.kube/config
 sudo chown -Rf vagrant:vagrant /home/vagrant/.kube
 sudo cp /root/.kube/config /vagrant/config
 
+sudo mkdir -p /vagrant/data
+
 echo '
 alias ll="ls -al"
 alias k="kubectl --kubeconfig ~/.kube/config"
@@ -53,10 +55,4 @@ echo "##################################################################"
 sudo bash /vagrant/scripts/local/others.sh
 
 exit 0
-
-sudo sed -i "s/\$KUBELET_EXTRA_ARGS/\$KUBELET_EXTRA_ARGS --node-ip=192.168.1.10/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-systemctl daemon-reload && systemctl restart kubelet
-kubectl get nodes -o wide
-
-
 

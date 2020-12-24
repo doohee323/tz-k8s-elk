@@ -17,5 +17,7 @@ sudo bash /vagrant/join.sh
 
 cat /vagrant/info
 
+sudo mkdir -p /vagrant/data
+
 exit 0
 
