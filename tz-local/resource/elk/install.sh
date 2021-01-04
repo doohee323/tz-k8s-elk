@@ -77,7 +77,7 @@ k delete service/elasticsearch-master
 k apply -f /vagrant/tz-local/resource/elk/elasticsearch-master-service.yaml
 #k port-forward svc/elasticsearch-master 31200:9200
 curl http://localhost:31200
-curl http://192.168.1.10:31200
+curl http://192.168.2.10:31200
 
 # k exec -it pod/elasticsearch-master-0 -- sh
 
@@ -85,11 +85,11 @@ k delete service/kibana-kibana
 k apply -f /vagrant/tz-local/resource/elk/kibana-service.yaml
 #k port-forward svc/kibana-kibana 30601:5601
 curl http://localhost:30601
-curl http://192.168.1.10:30601
+curl http://192.168.2.10:30601
 
 echo '
 ##[ ES ]##########################################################
-- Url: http://192.168.1.10:30601
+- Url: http://192.168.2.10:30601
 
 #  bash /vagrant/tz-local/resource/elk/fix.sh
 #######################################################################

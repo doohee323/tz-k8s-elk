@@ -12,7 +12,7 @@ bash /vagrant/scripts/local/base.sh
 
 OUTPUT_FILE=/vagrant/join.sh
 rm -rf /vagrant/join.sh
-sudo kubeadm init --apiserver-advertise-address=192.168.1.10 --pod-network-cidr=172.16.0.0/16
+sudo kubeadm init --apiserver-advertise-address=192.168.2.10 --pod-network-cidr=172.16.0.0/16
 sudo sysctl net.bridge.bridge-nf-call-iptables=1
 sudo kubeadm token create --print-join-command > /vagrant/join.sh
 chmod +x $OUTPUT_FILE
@@ -20,7 +20,7 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-sudo sed -i "s/\$KUBELET_EXTRA_ARGS/\$KUBELET_EXTRA_ARGS --node-ip=192.168.1.10/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+sudo sed -i "s/\$KUBELET_EXTRA_ARGS/\$KUBELET_EXTRA_ARGS --node-ip=192.168.2.10/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 systemctl daemon-reload && systemctl restart kubelet
 kubectl get nodes -o wide
 
